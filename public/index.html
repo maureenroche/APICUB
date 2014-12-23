@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Le titre du document</title>
-    <link rel="stylesheet" type="text/css" href="feuille-de-styles.css">
-  </head>
-  <body>
-    <!-- Une ou plusieurs balises HTML pour définir le contenu du document -->
-    <script src="jquery.js"></script>
-    <script src="mon-script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>APICUB - une carte</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <script type="text/javascript" src="http://data.lacub.fr/API/cub.xjs?key=TKJB2OGSVP"></script>
+  <script type="text/javascript">
+    CUB.ready(function() {
+      alert('API prête !');
+      CUB.init()
+    });
+  </script>
+</body>
 </html>
