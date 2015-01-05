@@ -2,16 +2,57 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>APICUB - une carte</title>
+  <title>APICUB - Temps Réel</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
   <script type="text/javascript" src="http://data.lacub.fr/API/cub.xjs?key=TKJB2OGSVP"></script>
   <script type="text/javascript">
-    CUB.ready(function() {
-      alert('API prête !');
-      CUB.init()
-    });
+    CUB.ready(function() {  
+  // Initialise l'API
+  CUB.init(null, {
+        extent: [1411039, 4182753, 1422945, 4194659]
+      });
+
+  // On cadre sur Bordeaux
+     CUB.moveToExtent(new CUB.Extent(1411039, 4182753, 1422945, 4194659));
+
+  // On met le fond de plan google maps
+  new CUB.Layer.Background('Mon arrière-plan', CUB.Layer.Background.layerType.GOOGLETERRAIN);
+
+
+  // On affiche les limites de la CUB en rouge
+  new CUB.Layer.Static('Bordure de la CUB', 'http://data.lacub.fr/wms?key=TKJB2OGSVP','FV_COMMU_S');
+  
+  //les stations VCUB en temps réel
+  new CUB.Layer.Static('VCUB', 'http://data.lacub.fr/wms?key=TKJB2OGSVP','CI_VCUB_P');
+
+  //Les parkings équipés de la disponibilité en temps réel
+  new CUB.Layer.Static('Parking', 'http://data.lacub.fr/wms?key=TKJB2OGSVP','CI_PARK_P');
+
+//Trafic en temps réel
+  new CUB.Layer.Static('Trafic', 'http://data.lacub.fr/wms?key=TKJB2OGSVP','CI_TRAFI_L');
+
+// Panel pour l'affichage
+      var panel = new CUB.Panel({
+        width: 200,
+        height: 150
+      });
+      
+      var content = '<div style="background-color: white; height: 100%; width: 100%"><h1>En temps réel</h1>';
+      
+      //  CUB.Layer.Static.layers contient la liste des couches statiques
+      for(var i in  CUB.Layer.Static.layers)
+        content += '<div><input type="checkbox" checked="checked" style="vertical-align: middle;" ' +
+          // On utilise la fonction de recherche de couche par nom
+          'onclick="CUB.Layer.Static.getLayerByName(\'' + CUB.Layer.Static.layers[i].name + '\').toggle()" />' + 
+          CUB.Layer.Static.layers[i].name + '</div>';
+      
+      content += '</div>';
+      panel.content(content);
+
+  });
+
   </script>
 </body>
 </html>
